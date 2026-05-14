@@ -1,104 +1,81 @@
+
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import FormInput from "../../../components/ui/FormInput";
-import { useForm } from "react-hook-form";
-import { Button } from "../../../components/ui/Button";
+import { InputText } from '../../../components/ui/InputText';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import Button from '../../../components/ui/Button';
 
-interface EventProps {
-  Nama: string;
-  Category: string;
-  Location: string;
-  Date: string;
-  Description: string;
+type FormData = {
+    nama: string;
+    pembicara: string;
+    tanggal: string;
+    jam: string;
+   
 }
-
 const schema = z.object({
-  Nama: z.string().min(3, "Nama event minimal 3 karakter"),
-  Category: z.string().min(3, "Kategori minimal 3 karakter"),
-  Location: z.string().min(3, "Lokasi minimal 3 karakter"),
-  Date: z.string().min(1, "Tanggal wajib diisi"),
-  Description: z.string().min(10, "Deskripsi minimal 10 karakter"),
-});
+    nama: z.string().min(1, "Nama Event harus diisi"),
+    pembicara: z.string().min(1, "Pembicara harus diisi"),
+    tanggal: z.string().min(1, "Tanggal harus diisi"),
+    jam: z.string().min(1, "Jam harus diisi"),
+  
+})
 
-export default function CreateEvent() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<EventProps>({
-    resolver: zodResolver(schema),
-  });
-
-  const onSubmit = (data: EventProps) => {
+const onSubmit = (data: FormData) => {
     console.log(data);
-  };
+};
 
-  return (
-    <div className="max-w-3xl mx-auto">
-      <h1 className="text-3xl font-bold mb-2 text-red-600">
-        Create New Event
-      </h1>
-      <p className="mb-6 text-gray-600">
-        Lengkapi form berikut untuk menambahkan event baru.
-      </p>
 
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="space-y-6 bg-white shadow-lg rounded-xl p-8 border border-gray-200"
-      >
-        <FormInput
-          text="Nama Event"
-          name="Nama"
-          tipe="text"
-          register={register}
-          error={errors.Nama?.message}
-          placeholder="Masukkan nama event"
-        />
+export default function EvenCreate() {
+    const {
+            register,
+            handleSubmit,
+            formState: { errors }
+        } = useForm<FormData>({
+            resolver: zodResolver(schema)
+        });
+        
+      return (
+        <div className="p-6 max-w-2xl mx-auto">
+          <div className="bg-white rounded-xl shadow-md p-8 border border-red-900">
+            <h2 className="text-2xl font-bold text-gray-800 mb-6 border-b pb-4">
+              Add New Event
+            </h2>
+    
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
+              {/* Input Nama */}
+              <div>
+        
+                <InputText
+                    label="Nama Event"
+                    nama="nama"
+                    register={register}
+                    error={errors.nama?.message}
+                 />
+                <InputText
+                    label="Pembicara"
+                    nama="pembicara"
+                    register={register}
+                    error={errors.pembicara?.message}
+                 />
+                <InputText
+                    label="Tanggal"
+                    nama="tanggal"
+                    register={register}
+                    error={errors.tanggal?.message}
+                 />
+                <InputText
+                    label="Jam"
+                    nama="jam"
+                    register={register}
+                    error={errors.jam?.message}
+                 />
+              </div>
 
-        <FormInput
-          text="Kategori"
-          name="Category"
-          tipe="text"
-          register={register}
-          error={errors.Category?.message}
-          placeholder="Contoh: Seminar, Workshop"
-        />
-
-        <FormInput
-          text="Lokasi"
-          name="Location"
-          tipe="text"
-          register={register}
-          error={errors.Location?.message}
-          placeholder="Masukkan lokasi"
-        />
-
-        <FormInput
-          text="Tanggal"
-          name="Date"
-          tipe="date"
-          register={register}
-          error={errors.Date?.message}
-        />
-
-        <FormInput
-          text="Deskripsi"
-          name="Description"
-          tipe="text"
-          register={register}
-          error={errors.Description?.message}
-          placeholder="Masukkan deskripsi"
-        />
-
-        <div className="flex justify-end">
-          <Button
-            label="Simpan Event"
-            variant="primary"
-            type="submit"
-            className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg shadow-md transition"
-          />
+              <div className="flex justify-start mt-4">
+                 <Button type="submit" label="Simpan" />
+              </div>
+            </form>
+          </div>
         </div>
-      </form>
-    </div>
-  );
-}
+      );
+    }

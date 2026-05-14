@@ -20,7 +20,7 @@ export default function Beranda() {
             
                         <div className="flex gap-3">
                           <Button label="Info Selengkapnya" variant="primary" />
-                          <Button label="Hubungi Panitia" variant="outline" />
+                          <Button label="Hubungi Panitia" variant="secondary" />
                         </div>
                       </div>
             

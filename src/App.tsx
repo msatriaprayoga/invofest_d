@@ -1,41 +1,80 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import MainLayouts from "./layouts/MainLayout";
-import AuthLayouts from "./layouts/AuthLayout";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Beranda from "./pages/Beranda";
-import Competition from "./pages/Competition";
+
+import Copetition from "./pages/Competition";
+import HomePage from "./pages/HomePage_backup";
+import LoginForm from "./pages/LoginForm";
+import RegisterEvent from "./pages/RegisterEvent";
 import Seminar from "./pages/Seminar";
 import Talkshow from "./pages/Talkshow";
 import Workshop from "./pages/Workshop";
-import CreateCategory from "./pages/dashboard/category/CreateCategory";
-import CreateSpeaker from "./pages/dashboard/speaker/CreateSpeaker";
-import CreateEvent from "./pages/dashboard/event/CreateEvent";
-import Dashboard from "./pages/dashboard/dashboard";
+
+
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MainLayout from "./layouts/MainLayout";
+import AuthLayout from "./layouts/AuthLayout";
+import DashboardIndex from "./pages/dashboard/DashboardIndex";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import DashboardLayout from "./layouts/DashboardLayout";
+import CategoryIndex from "./pages/dashboard/category/CategoryIndex";
+import EventIndex from "./pages/dashboard/event/EventIndex";
+import CategoryCreate from "./pages/dashboard/category/CreateCategory";
+import SpeakerCreate from "./pages/dashboard/speaker/CreateSpeaker";
+import EventCreate from "./pages/dashboard/event/CreateEvent";
+import SpeakerIndex from "./pages/dashboard/speaker/SpeakerIndex";
+
 
 function App() {
-  return  (
+
+  return (
     <BrowserRouter>
       <Routes>
-        <Route element={<MainLayouts />}> 
-          <Route path="/" element={<Beranda />} />
-          <Route path="/competition" element={<Competition />} />
-          <Route path="/seminar" element={<Seminar />} />
-          <Route path="/talkshow" element={<Talkshow />} />
-          <Route path="/workshop" element={<Workshop />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/category/create" element={<CreateCategory />} />
-          <Route path="/speaker/create" element={<CreateSpeaker />} />
-          <Route path="/event/create" element={<CreateEvent />} />
+
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/Competition" element={<Copetition />} />
+          <Route path="/Seminar" element={<Seminar />} />
+          <Route path="/Workshop" element={<Workshop />} />
+          <Route path="/Talkshow" element={<Talkshow />} />
         </Route>
 
-        <Route element={<AuthLayouts />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+
+        <Route element={<AuthLayout/>}>
+          <Route path="/Login" element={<LoginForm/>} />
+          <Route path="/Login" element={<HomePage/>} />
+          <Route path="/register" element={<RegisterEvent />} />
         </Route>
+
+        {/* halaman khusus login */}
+        <Route element={<ProtectedRoute />}>
+          <Route element={<DashboardLayout />}>
+
+            <Route path="/dashboard" element={<DashboardIndex />} />
+
+            
+            <Route path="/dashboard/category" element={<CategoryIndex />} />
+            <Route path="/dashboard/category/create" element={<CategoryCreate />} />
+
+
+            <Route path="/dashboard/speaker" element={<SpeakerIndex />} />
+            <Route path="/dashboard/speaker/create" element={<SpeakerCreate />} />
+
+
+            <Route path="/dashboard/event" element={<EventIndex />} />
+            <Route path="/dashboard/event/create" element={<EventCreate />} />
+
+
+
+          </Route>
+        </Route>
+
+        
       </Routes>
     </BrowserRouter>
+
+
   );
+
+
 }
 
 export default App;

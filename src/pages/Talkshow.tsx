@@ -1,6 +1,7 @@
 import Button from "../components/ui/Button";
-import SpeakerCard from "../components/SpeakerCard";
-
+import SpeakerCard from "../components/ui/SpeakerCard";
+import { Collaps } from "../components/ui/Collaps";
+import { Calendar, ChevronDown, Clock1, MapPin, University } from "lucide-react";
 
 export default function Talkshow() {
 
@@ -113,6 +114,31 @@ export default function Talkshow() {
                 </div>
             </section>
 
+            <section id="jadwal">
+                <div>
+                    <div className="py-6">
+                        <h1 className="font-semibold text-3xl text-center text-[#802D43]">Pelaksanaan IT Seminar</h1>
+                    </div>
+                    <div className="py-20 grid grid-cols-1 md:grid-cols-2 gap-6 ">
+                        <Collaps
+                        title="Senin, 24 November 2025"
+                        icon={Calendar}
+                        />
+                        <Collaps
+                        title="08.00 WIB - 12.00 WIB"
+                        icon={Clock1}
+                        />
+                        <Collaps
+                        title="Aula Gedung C"
+                        icon={MapPin}
+                        />
+                        <Collaps
+                        title="Kampus 1 (mataram) Universitas Harkat Negeri"
+                        icon={University}
+                        />
+                    </div>
+                </div>
+            </section>
 
             <section id="collaps">
                 <div>
@@ -121,14 +147,18 @@ export default function Talkshow() {
                         <h1 className='text-4xl fon'>Punya Pertanyaan? Lihat</h1>
                         <span className='text-4xl font-bold text-red-900'>DISINI</span>
                         <p className='flex justify-center text-base text-gray-600 mt-5'>Ada banyak informasi yang terkait dengan INVOFEST, Anda dapat melihat daftar pertanyaan di bawah ini.</p>
-                        <div className='mt-10 w-full max-w-4xl'>
-                            {collapseItem.map((item, index) => (
-                                <details key={index} className='mb-4'>
-                                    <summary className='cursor-pointer text-lg font-semibold text-[#802D43]'>{item.title}</summary>
-                                    <p className='mt-2 text-gray-700'>{item.description}</p>
-                                </details>
-                            ))}
-                        </div>
+                    </div>
+
+                    <div className='py-24 grid grid-cols-1 md:grid-cols-2 gap-6 px-3 items-start'>
+                        {collapseItem.map((item, index) => (
+                            <Collaps
+                                key={index}
+                                title={item.title}
+                                description={item.description}
+                                icon={ChevronDown}
+                                variant='secondary'
+                            />
+                        ))}
                     </div>
                 </div>
             </section>

@@ -1,61 +1,57 @@
+
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import FormInput from "../../../components/ui/FormInput";
-import { useForm } from "react-hook-form";
-import { Button } from "../../../components/ui/Button";
+import { InputText } from '../../../components/ui/InputText';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import Button from '../../../components/ui/Button';
 
 type FormData = {
-  Name : string;
+    category: string;
+   
+}
+const schema = z.object({
+    category: z.string().min(1, "Nama Category harus diisi"),
+  
+})
+
+const onSubmit = (data: FormData) => {
+    console.log(data);
 };
 
-const schema = z.object({
-  Name: z.string().min(3, "Nama kategori minimal 3 karakter"),
-});
-
-export default function CreateCategory() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
-    resolver: zodResolver(schema),
-  });
-
-  const onSubmit = (data: FormData) => {
-    console.log(data);
-  };
-
+export default function CategoryCreate() {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm<FormData>({
+        resolver: zodResolver(schema)
+    });
+    
   return (
-    <div className="max-w-xl mx-auto">
-      <h1 className="text-3xl font-bold mb-2 text-red-700">
-        Create Category
-      </h1>
-      <p className="mb-6 text-gray-600">
-        Lengkapi form berikut untuk membuat kategori baru.
-      </p>
+    <div className="p-6 max-w-2xl mx-auto">
+      <div className="bg-white rounded-xl shadow-md p-8 border border-red-900">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6 border-b pb-4">
+          Add New Category
+        </h2>
 
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="space-y-6 bg-white shadow-lg rounded-xl p-8 border border-gray-200"
-      >
-        <FormInput
-          text="Nama Kategori"
-          name="Name"
-          tipe="text"
-          register={register}
-          error={errors.Name?.message}
-          placeholder="Masukkan nama kategori"
-        />
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
+          {/* Input Nama */}
+          <div>
+    
+            <InputText
+                label="Category"
+                nama="category"
+                register={register}
+                error={errors.category?.message}
+             />
+          </div>
 
-        <div className="flex justify-end">
-          <Button
-            label="Simpan Kategori"
-            variant="primary"
-            type="submit"
-            className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg shadow-md transition"
-          />
-        </div>
-      </form>
+    
+          <div className="flex justify-start mt-4">
+             <Button type="submit" label="Simpan" />
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
